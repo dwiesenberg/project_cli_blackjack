@@ -25,13 +25,11 @@ module Blackjack
 #  begin from @dealer.continue_round
 
     def dealer_continues
-      puts "Dealer reveals his second card ..."
+      puts "\nDealer's turn - reveals his second card ..."
       deal_card
-      @board.render_layout
       loop do
-        @blackjack, @bust = false, false
+        @blackjack, @ace_with_over_16, @bust = false, false, false
         blackjack? || ace_with_over_16? || bust?
-        puts "\n#{@name}'s turn ..."
         @board.render_layout
         if @blackjack || @bust || next_move == "P"  
           print "\nEnd of #{@name}'s turn; press enter to continue." 
