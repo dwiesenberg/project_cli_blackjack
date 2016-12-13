@@ -59,11 +59,52 @@ Some additional rules:
    that could put his points value below 17 (by equaling 1 instead 
    of 11), the ace value is set to 1 and the dealer continues to hit.
 
-Now please enter player details:
+      }
+ 
+#     sophisticated_option?
+#       TODO (optional method for future programming)
 
-      } 
+      puts "Now please enter player details\n: "
 
     end
+
+# begin optional method for future programming
+
+    def sophisticated_option?
+      puts %{
+Sophisticated blackjack has options to "split pairs" and "double 
+down." Do you want information on these (Y or N)?
+
+      }
+      loop do
+        until %w(Y N).include? (answer = gets.chomp)
+          print "Incorrect answer - try again. "
+        end
+        return if answer == "N"
+      end
+
+      puts %{
+
+Splitting Pairs
+---------------
+A player who starts out with two of any card (e.g. two 8's) may 
+"split". Each card is split from the other into a new hand, an equal 
+bet is added to the new hand, and a new card is dealt to each hand. 
+Each hand is then played as normal from there, though no 
+"blackjacks" occur.
+
+Doubling Down
+-------------
+A player may choose to "double down" as the first move on any new 
+hand. This means the player doubles his/her bet, and will receive 
+a single dealt card (with no option to continue hitting). The dealer 
+draws as normal afterwards.
+
+      }
+
+    end
+
+# end optional method for future programming      
 
     def setup_deck
       @deck = Deck.new
