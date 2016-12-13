@@ -11,8 +11,6 @@ module Blackjack
     SUITS = %w{Spades Hearts Diamonds Clubs}
 
     def initialize
-      puts "class Deck initialized ... "
-      puts "in class Deck ... "
       @cards = []
       manufacture_card_deck
     end

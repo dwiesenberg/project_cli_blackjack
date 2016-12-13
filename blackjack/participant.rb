@@ -8,10 +8,6 @@ module Blackjack
     attr_reader :blackjack, :bust
 
     def initialize
-
-      puts "class Participant initialized ... "
-      puts "in class Participant ... "
-
     end
 
 #   def deal_card 

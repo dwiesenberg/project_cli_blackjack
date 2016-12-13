@@ -6,7 +6,6 @@ module Blackjack
   class Game
 
     def initialize
-      puts "class Game initialized ... "
     end
 
     def play
@@ -58,13 +57,12 @@ Some additional rules:
    must pass. If the dealer has at least 17 which in-cludes an ace 
    that could put his points value below 17 (by equaling 1 instead 
    of 11), the ace value is set to 1 and the dealer continues to hit.
-
       }
  
 #     sophisticated_option?
 #       TODO (optional method for future programming)
 
-      puts "Now please enter player details\n: "
+      puts "Now please enter player details:"
 
     end
 
@@ -73,9 +71,8 @@ Some additional rules:
     def sophisticated_option?
       puts %{
 Sophisticated blackjack has options to "split pairs" and "double 
-down." Do you want information on these (Y or N)?
+down." Do you want information on these (Y or N)? }
 
-      }
       loop do
         until %w(Y N).include? (answer = gets.chomp)
           print "Incorrect answer - try again. "

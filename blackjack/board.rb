@@ -8,8 +8,6 @@ module Blackjack
   attr_reader :players
 
     def initialize
-      puts "class Board initialized ... "
-      puts "in class Board ... "
     end
 
     def board_copy(dealer, players)
@@ -34,14 +32,12 @@ end of round. } # note: program deals out dealer's second card then
     end
 
     def render_layout
-#      binding.pry
       puts "\nLatest Results"
       puts "-" * 14
       print @dealer.name.ljust(12, padstr = " "), ": ", @dealer.points.to_s.rjust(2, padstr =" "), " "
       render_layout_notes(@dealer)
       @players.each do |player|
         print player.name.ljust(12, padstr = " "), ": ", player.points.to_s.rjust(2, padstr =" "), " "
-#        binding.pry
         render_layout_notes(player)
       end
     end
@@ -69,7 +65,7 @@ end of round. } # note: program deals out dealer's second card then
     end
 
     def render_results
-      puts "\nResults"
+      puts "Results"
       puts "-" * 7
       player_results
       puts "\nAny players whose names are missing have lost the game."

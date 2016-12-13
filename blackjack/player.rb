@@ -9,9 +9,6 @@ module Blackjack
     attr_accessor :hand, :points, :result 
 
     def initialize(deck, board, name, chips)
-      puts "class Player initialized ... "
-      puts "in class Player ... "
-
       @deck = deck
       @board = board
       @name = name

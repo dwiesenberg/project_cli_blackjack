@@ -9,8 +9,8 @@
 # require './blackjack_player'
 # require './blackjack_deck'
 
-require 'pry'
-require 'pry-byebug'
+# require 'pry'
+# require 'pry-byebug'
 
 require './game'
 require './board'
