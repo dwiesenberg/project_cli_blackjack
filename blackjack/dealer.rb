@@ -63,7 +63,7 @@ module Blackjack
         return "P"
       end
     end
-
+    
 # end from @dealer.players_continue
 
     def reset_dealer_parameters 
