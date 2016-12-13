@@ -5,117 +5,94 @@
 module Blackjack
   class Board
 
+  attr_reader :players
+
     def initialize
       puts "class Board initialized ... "
       puts "in class Board ... "
     end
 
-    def board_copy(dealer, player)
+    def board_copy(dealer, players)
       @dealer = dealer # not array
-      @player = player # array - this is where it is stored
+      @players = players # array
     end
 
     def render_bets
       puts "\nBets Placed"
       puts "-" * 11
-#  @players.each do |player|
-      puts "#{@player.name.ljust(12, padstr = " ")}: #{@player.bet} chips. Available chips = #{@player.chips}."
-#   end
+      @players.each do |player|
+        puts "#{player.name.ljust(12, padstr = " ")}: #{player.bet.to_s.rjust(3, padstr = " ")} chips. Available chips = #{player.chips.to_s.rjust(3, padstr = " ")}."
+      end
     end
 
     def dealer_render_layout_note
       if @dealer.hand.length == 1
         puts %{
 Note: dealer's points are for only his FIRST card until his turn at 
-end of round. 
-          } # note: program deals out dealer's second card then
+end of round. } # note: program deals out dealer's second card then
       end
     end
 
     def render_layout
+#      binding.pry
       puts "\nLatest Results"
       puts "-" * 14
-      print @dealer.name.ljust(12, padstr = " "), ": ", @dealer.points, " "
+      print @dealer.name.ljust(12, padstr = " "), ": ", @dealer.points.to_s.rjust(2, padstr =" "), " "
       render_layout_notes(@dealer)
-#      @players.each do |player|
-      print @player.name.ljust(12, padstr = " "), ": ", @player.points, " "
-      render_layout_notes(@player)
-#      end
+      @players.each do |player|
+        print player.name.ljust(12, padstr = " "), ": ", player.points.to_s.rjust(2, padstr =" "), " "
+#        binding.pry
+        render_layout_notes(player)
+      end
     end
 
     def render_layout_notes(person)
       @person = person
-      case
-      when person.blackjack
+      if @person.blackjack
         puts "Blackjack!"
-      when person.bust
+      elsif @person.bust
         puts "Bust!" 
       else
-        render_layout_aces    
+        render_layout_aces
+        puts # new line if no notes
       end
     end
 
     def render_layout_aces      
       @person.hand.each do |card|
         if card[:value] == 11 || card[:value] == 1
-          puts "Includes ace at #{card[:value]} point(s)."
-        else
-          puts # new line if no notes
+          print "Includes ace at #{card[:value]} point(s). "
         end
       end
-      puts "As score had been over 21, one ace was reset to 1 point. "   if @person.bust_with_ace == true 
-      puts "As score had been 17 or over, one ace was reset to 1 point. " if @person.ace_with_over_16 == true
+      print "As score had been over 21, one ace was reset to 1 point. "   if @person.bust_with_ace == true 
+      print "As score had been 17 or over, one ace was reset to 1 point. " if @person.ace_with_over_16 == true
     end
 
     def render_results
       puts "\nResults"
       puts "-" * 7
-# @players.each do |player|
-# @player = player
+      player_results
+      puts "\nAny players whose names are missing have lost the game."
+    end
 
-      case @player.result
-      when "win"
-        puts "#{@player.name.ljust(12, padstr = " ")}: wins #{@player.bet} chips. Available chips = #{@player.chips}."
-      when "win_blackjack"
-        puts "#{@player.name.ljust(12, padstr = " ")}: wins #{(@player.bet * 1.5).to_i} chips. Available chips = #{@player.chips}."
-      when "lose"
-        puts "#{@player.name.ljust(12, padstr = " ")}: loses #{@player.bet} chips. Available chips = #{@player.chips}."
-      when "game lost"
-        puts "#{@player.name.ljust(12, padstr = " ")}: loses #{@player.bet} chips."
-        puts "No chips left. Game lost. Better luck next time!"
-#          remove_player - only with multiple players
-      when "stand-off"
-        puts "#{@player.name.ljust(12, padstr = " ")}: has a stand-off (draw) and gets back bet of #{@player.bet} chips. Available chips = #{@player.chips}."
+    def player_results
+      @players.each do |player|
+        case player.result
+        when "win"
+          puts "#{player.name.ljust(12, padstr = " ")}: wins  #{player.bet.to_s.rjust(3, padstr = " ")} chips. Available chips = #{player.chips.to_s.rjust(3, padstr = " ")}."
+        when "win_blackjack"
+          puts "#{player.name.ljust(12, padstr = " ")}: wins  #{(player.bet * 1.5).to_i.to_s.rjust(3, padstr = " ")} chips. Available chips = #{player.chips.to_s.rjust(3, padstr = " ")}."
+        when "lose"
+          puts "#{player.name.ljust(12, padstr = " ")}: loses #{player.bet.to_s.rjust(3, padstr = " ")} chips. Available chips = #{player.chips.to_s.rjust(3, padstr = " ")}."
+        when "game lost"
+          puts "#{player.name.ljust(12, padstr = " ")}: loses #{player.bet.to_s.rjust(3, padstr = " ")} chips. No chips left. Game lost. Better luck next time!"
+        when "insufficient chips"
+          puts "#{player.name.ljust(12, padstr = " ")}: loses #{player.bet.to_s.rjust(3, padstr = " ")} chips. Not enough chips left to continue. Better luck next time!"
+        when "stand-off"
+          puts "#{player.name.ljust(12, padstr = " ")}: has a stand-off (draw) and gets back bet of #{player.bet} chips. Available chips = #{player.chips.to_s.rjust(3, padstr = " ")}."
+        end
       end
-
-#      at end of palyers loop: puts "\n\nPlayers whose names are missing have lost the game."
-    end
-
-    def remove_player
-# @players.each do |player|
-# @player = player      
-# @players.delete_if { |player| player.result == "game lost" }
-    end
-
-
-
-          
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+    end      
 
   end # class Board
 end # module Blackjack 

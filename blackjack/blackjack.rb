@@ -9,6 +9,8 @@
 # require './blackjack_player'
 # require './blackjack_deck'
 
+require 'pry'
+require 'pry-byebug'
 
 require './game'
 require './board'
@@ -16,6 +18,7 @@ require './participant'
 require './dealer'
 require './player'
 require './deck'
+
 # require './test' # test
 
 # Includes the Blackjack

@@ -11,9 +11,13 @@ module Blackjack
 
     def play
       set_up
-      begin_round
-      continue_round
-      results
+      loop do
+        begin_round
+        continue_round
+        results
+        another_round?
+        reset_parameters
+      end
     end
 
     # begin set_up
@@ -55,6 +59,8 @@ Some additional rules:
    that could put his points value below 17 (by equaling 1 instead 
    of 11), the ace value is set to 1 and the dealer continues to hit.
 
+Now please enter player details:
+
       } 
 
     end
@@ -68,18 +74,25 @@ Some additional rules:
     end
 
     def setup_participants  
-      @players = []
+      @initial_players = []
       @dealer = Dealer.new(@deck, @board, "Dealer")
-      @player = Player.new(@deck, @board, get_player_name, get_player_chips)
-#      @initial_players << @player
-      @board.board_copy(@dealer, @player)
+      enter_players
+      @board.board_copy(@dealer, @initial_players)
+    end
 
-#      @players << Dealer.new(@deck, get_player_name)
-#      @players << Player.new(@deck, get_player_name)
+    def enter_players
+      loop do
+        @initial_players << Player.new(@deck, @board, get_player_name, get_player_chips)
+        print "\nAnother player (Y or N)? "
+        until %w(Y N).include? (answer = gets.chomp)
+          print "Incorrect answer - try again: "
+        end
+        break if answer == "N"
+      end
     end
 
     def get_player_name
-      print "What is your name? "
+      print "\nWhat is your name? "
       while "" == (name = gets.chomp)
         print "\nYou did not enter an answer. Try again: "
       end
@@ -102,13 +115,13 @@ Some additional rules:
     def begin_round
       place_bets
       @dealer.deal_card
-      2.times{@player.deal_card}
+      @board.players.each {|player| 2.times{player.deal_card}}
+        # deal 2 cards to each player
       @board.dealer_render_layout_note
     end
 
     def place_bets
-      @player.place_bet 
-# TO DO add facility to handle multiple players
+      @board.players.each {|player| player.place_bet} 
       @board.render_bets # after all bets placed
     end
 
@@ -117,7 +130,7 @@ Some additional rules:
     # begin continue_round
 
     def continue_round
-      @player.players_continue
+      @board.players.each {|player| player.players_continue}
       @dealer.dealer_continues
     end
 
@@ -126,12 +139,13 @@ Some additional rules:
     # begin results
 
     def results
-# TODO apply to all players 
-      puts
-      dealer_blackjack? || player_blackjack? || player_bust? || dealer_bust? || evaluate_on_points
+      @board.players.each do |player|
+        @player = player
+        puts
+        dealer_blackjack? || player_blackjack? || player_bust? || dealer_bust? || evaluate_on_points
+      end
       @board.render_results
-# TODO alter next line for many rounds
-      puts "\nThank you for playing!\n\n"
+      remove_game_losers
     end
 
     def dealer_blackjack?
@@ -172,8 +186,44 @@ Some additional rules:
       end
     end
 
+    def remove_game_losers
+      @board.players.delete_if {|player| player.result == "game lost" || player.result == "insufficient chips"}
+    end
 
     # end results  
+
+    # begin another_round? / reset_parameters
+
+    def another_round?
+      if @board.players.empty?
+        puts "No more players left."
+      else
+        print "Another round (Y or N)? "
+        until %w(Y N).include? (answer = gets.chomp)
+          print "incorrect answer - try again"
+        end
+        return if answer == "Y"
+      end
+      puts "\nThank you for playing!\n\n"
+      exit
+    end
+
+    def reset_parameters  
+      @deck.create_card_deck_again
+      @dealer.points = 0
+      @dealer.hand = []
+      @dealer.reset_dealer_parameters
+      @board.players.each do |player| 
+        player.points = 0
+        player.hand = []
+        player.result = ""
+      end
+    end
+
+    # end another_round? / reset_parameters
+
+
+
 
 
   end # class Game

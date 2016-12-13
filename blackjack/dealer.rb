@@ -5,7 +5,8 @@
 module Blackjack
   class Dealer < Participant
 
-    attr_reader :points, :name, :hand, :blackjack, :bust, :bust_with_ace, :ace_with_over_16
+    attr_reader :name, :blackjack, :bust, :bust_with_ace, :ace_with_over_16
+    attr_accessor :hand, :points
 
     def initialize(deck, board, name)
       puts "class Dealer initialized ... "
@@ -49,7 +50,7 @@ module Blackjack
             card[:value] = 1
             @points -= 10
             @ace_with_over_16 = true
-            return # return immediately so that another ace in hand is not reset as well
+            return true # return immediately so that another ace in hand is not reset as well
           end
           break
         end
@@ -60,35 +61,19 @@ module Blackjack
     def next_move
       if @points < 17
         puts "\nDealer draws again as his score is less than 17."
-        print "Press enter when ready to proceed: \n"
+        print "Press enter when ready to proceed: "
         gets
       else
         return "P"
       end
     end
 
-
-
-
 # end from @dealer.players_continue
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+    def reset_dealer_parameters 
+      # from @game.reset_parameters when starting new round
+      @blackjack, @ace_with_over_16, @bust = false, false, false
+    end
 
   end # class Dealer
 end # module Blackjack 

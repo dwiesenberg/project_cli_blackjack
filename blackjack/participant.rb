@@ -7,8 +7,6 @@ module Blackjack
 
     attr_reader :blackjack, :bust
 
-    
-
     def initialize
 
       puts "class Participant initialized ... "
@@ -39,21 +37,6 @@ module Blackjack
       end
       false
     end
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
   end # class Participant

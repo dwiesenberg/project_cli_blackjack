@@ -2,10 +2,10 @@
 
 # class Deck
 
-# module Blackjack
+module Blackjack
   class Deck
 
-    attr_reader :drawn_card
+    attr_reader :drawn_card, :cards
     
     RANKS = %w{ A 2 3 4 5 6 7 8 9 10 J Q K}
     SUITS = %w{Spades Hearts Diamonds Clubs}
@@ -32,8 +32,6 @@
       end
     end      
 
-
-
     def shuffle!
       @cards.shuffle!
     end
@@ -48,8 +46,13 @@
       @cards.length
     end
 
+    def create_card_deck_again
+      @cards = []
+      manufacture_card_deck
+    end
+
   end # class Deck
 
-# end # module Blackjack 
+end # module Blackjack 
 
 

@@ -5,7 +5,8 @@
 module Blackjack
   class Player < Participant
 
-    attr_reader :points, :name, :chips, :hand, :bet, :blackjack, :bust, :bust_with_ace, :ace_with_over_16, :result 
+    attr_reader :name, :chips, :bet, :blackjack, :bust, :bust_with_ace, :ace_with_over_16 
+    attr_accessor :hand, :points, :result 
 
     def initialize(deck, board, name, chips)
       puts "class Player initialized ... "
@@ -67,7 +68,7 @@ available chips! }
     end
 
     def next_move
-      print "#{@name}: do you want to hit or pass (H or P)? "
+      print "\n#{@name}: do you want to hit or pass (H or P)? "
       until %w(H P).include? (answer = gets.chomp)
         print "Incorrect answer -- try again: "
       end
@@ -91,9 +92,9 @@ available chips! }
 
     def lose
       # @chips remain the same because @bet has already been deducted when bet placed
-      puts "in lose ... You have #{@chips} chips left."
       @result = "lose"
       @result = "game lost" if @chips == 0
+      @result = "insufficient chips" if @chips < 20
     end
 
     def stand_off
@@ -102,14 +103,6 @@ available chips! }
     end
 
 # end from @game.results
-
-
-
-
-
-
-
-
 
 
   end # class Player
