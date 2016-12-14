@@ -5,10 +5,12 @@
 module Blackjack
   class Board
 
-  attr_reader :players
+    attr_reader :players
 
     def initialize
     end
+
+    private
 
     def board_copy(dealer, players)
       @dealer = dealer # not array
@@ -89,6 +91,9 @@ end of round. } # note: program deals out dealer's second card then
         end
       end
     end      
+
+    public :board_copy, :dealer_render_layout_note, :render_bets 
+    public :render_layout, :render_results
 
   end # class Board
 end # module Blackjack 

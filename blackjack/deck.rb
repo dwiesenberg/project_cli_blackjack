@@ -15,6 +15,8 @@ module Blackjack
       manufacture_card_deck
     end
 
+    private
+
     def manufacture_card_deck
       SUITS.each do |suit|
         RANKS.each do |rank|
@@ -48,6 +50,8 @@ module Blackjack
       @cards = []
       manufacture_card_deck
     end
+
+    public :draw_card, :create_card_deck_again
 
   end # class Deck
 

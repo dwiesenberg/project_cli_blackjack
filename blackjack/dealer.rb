@@ -14,10 +14,9 @@ module Blackjack
       @name = name
       @hand = []
       @points = 0
-
-
     end
 
+    private
 
 #  begin from @dealer.continue_round
 
@@ -70,6 +69,8 @@ module Blackjack
       # from @game.reset_parameters when starting new round
       @blackjack, @ace_with_over_16, @bust = false, false, false
     end
+
+    public :dealer_continues, :reset_dealer_parameters
 
   end # class Dealer
 end # module Blackjack 

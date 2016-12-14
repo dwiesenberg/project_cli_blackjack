@@ -12,12 +12,12 @@ module Blackjack
       @deck = deck
       @board = board
       @name = name
-      puts "initializing Player ... chips = #{chips}"
       @chips = chips
       @hand = []
       @points = 0
-
     end
+
+    private
 
     def place_bet
       print %{
@@ -72,7 +72,6 @@ available chips! }
       answer
     end
 
-
 # end from @game.players_continue
 
 # begin from @game.results
@@ -101,13 +100,9 @@ available chips! }
 
 # end from @game.results
 
+    public :place_bet, :players_continue, :win, :lose
+    public :win_blackjack, :stand_off
 
   end # class Player
 end # module Blackjack 
-   
-
-
-
-
-
 

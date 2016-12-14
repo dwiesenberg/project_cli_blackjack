@@ -29,7 +29,7 @@ include Blackjack
 
 # Play!
 
-puts "Ready to play ... please wait"
+puts "\nReady to play ... please wait"
 sleep(1)
 
 Game.new.play

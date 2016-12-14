@@ -19,6 +19,8 @@ module Blackjack
       end
     end
 
+    private
+
     # begin set_up
 
     def set_up
@@ -236,7 +238,7 @@ draws as normal afterwards.
       if @board.players.empty?
         puts "No more players left."
       else
-        print "Another round (Y or N)? "
+        print "\nAnother round (Y or N)? "
         until %w(Y N).include? (answer = gets.chomp)
           print "incorrect answer - try again"
         end
@@ -259,10 +261,6 @@ draws as normal afterwards.
     end
 
     # end another_round? / reset_parameters
-
-
-
-
 
   end # class Game
 end # module Blackjack 

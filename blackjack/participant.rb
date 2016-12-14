@@ -18,6 +18,8 @@ module Blackjack
       @points += @drawn_card[:value]
     end    
 
+    protected
+
     def blackjack?
       if @hand.length == 2 && @points == 21
         @blackjack = true
@@ -33,7 +35,6 @@ module Blackjack
       end
       false
     end
-
 
   end # class Participant
 end # module Blackjack 
