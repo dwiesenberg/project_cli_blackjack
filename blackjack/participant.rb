@@ -7,8 +7,6 @@ module Blackjack
 
     attr_reader :blackjack, :bust
 
-    def initialize
-    end
 
 #   def deal_card 
 

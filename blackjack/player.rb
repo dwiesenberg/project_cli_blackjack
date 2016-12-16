@@ -32,8 +32,6 @@ available chips! }
       puts "You have #{@chips} chips left." #test
     end
 
-#  begin from @game.continue_round
-
     def players_continue
       puts "\n#{@name}'s turn ..."
       loop do 
@@ -49,6 +47,32 @@ available chips! }
       end
     end
 
+    def win
+      @chips += @bet * 2 # return bet plus winnings
+      @result = :win
+    end
+
+    def win_blackjack
+      @chips += (@bet * 2.5).to_i # return bet plus winnings
+      @result = :win_blackjack
+    end
+
+    def lose
+      # @chips remain the same because @bet has already been deducted when bet placed
+      @result = :lose
+      @result = :game_lost if @chips == 0
+      @result = :insufficient_chips if @chips < 20
+    end
+
+    def stand_off
+      @chips += @bet # return bet
+      @result = :stand_off
+    end
+
+    public :place_bet, :players_continue, :win, :lose
+    public :win_blackjack, :stand_off
+
+    private
 
     def bust_with_ace?
       if @points > 21
@@ -71,37 +95,6 @@ available chips! }
       end
       answer
     end
-
-# end from @game.players_continue
-
-# begin from @game.results
-
-    def win
-      @chips += @bet * 2 # return bet plus winnings
-      @result = "win"
-    end
-
-    def win_blackjack
-      @chips += (@bet * 2.5).to_i # return bet plus winnings
-      @result = "win_blackjack"
-    end
-
-    def lose
-      # @chips remain the same because @bet has already been deducted when bet placed
-      @result = "lose"
-      @result = "game lost" if @chips == 0
-      @result = "insufficient chips" if @chips < 20
-    end
-
-    def stand_off
-      @chips += @bet # return bet
-      @result = "stand-off"
-    end
-
-# end from @game.results
-
-    public :place_bet, :players_continue, :win, :lose
-    public :win_blackjack, :stand_off
 
   end # class Player
 end # module Blackjack 

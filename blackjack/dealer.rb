@@ -5,8 +5,10 @@
 module Blackjack
   class Dealer < Participant
 
-    attr_reader :name, :blackjack, :bust, :bust_with_ace, :ace_with_over_16
-    attr_accessor :hand, :points
+    attr_reader :name, :bust_with_ace
+    attr_accessor :hand, :points, :blackjack, :ace_with_over_16
+    attr_accessor :bust 
+
 
     def initialize(deck, board, name)
       @deck = deck
@@ -17,8 +19,6 @@ module Blackjack
     end
 
     private
-
-#  begin from @dealer.continue_round
 
     def dealer_continues
       puts "\nDealer's turn - reveals his second card ..."
@@ -37,6 +37,8 @@ module Blackjack
     end
 
     # methods blackjack? bust? next_move in parent class
+
+    private
 
     def ace_with_over_16?
       if @points > 16
@@ -62,15 +64,8 @@ module Blackjack
         return "P"
       end
     end
-    
-# end from @dealer.players_continue
 
-    def reset_dealer_parameters 
-      # from @game.reset_parameters when starting new round
-      @blackjack, @ace_with_over_16, @bust = false, false, false
-    end
-
-    public :dealer_continues, :reset_dealer_parameters
+    public :dealer_continues
 
   end # class Dealer
 end # module Blackjack 

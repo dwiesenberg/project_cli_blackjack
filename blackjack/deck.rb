@@ -10,11 +10,19 @@ module Blackjack
     RANKS = %w{ A 2 3 4 5 6 7 8 9 10 J Q K}
     SUITS = %w{Spades Hearts Diamonds Clubs}
 
-    def initialize
+    private
+
+    def create_card_deck
       @cards = []
       manufacture_card_deck
     end
 
+    def draw_card
+      shuffle!
+      @drawn_card = @cards.pop
+      @drawn_card
+    end
+ 
     private
 
     def manufacture_card_deck
@@ -36,22 +44,11 @@ module Blackjack
       @cards.shuffle!
     end
 
-    def draw_card
-      shuffle!
-      @drawn_card = @cards.pop
-      @drawn_card
-    end
-
     def remaining
       @cards.length
     end
 
-    def create_card_deck_again
-      @cards = []
-      manufacture_card_deck
-    end
-
-    public :draw_card, :create_card_deck_again
+    public :draw_card, :create_card_deck
 
   end # class Deck
 

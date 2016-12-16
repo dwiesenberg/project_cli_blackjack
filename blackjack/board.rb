@@ -7,9 +7,6 @@ module Blackjack
 
     attr_reader :players
 
-    def initialize
-    end
-
     private
 
     def board_copy(dealer, players)
@@ -33,6 +30,13 @@ end of round. } # note: program deals out dealer's second card then
       end
     end
 
+    def render_results
+      puts "Results"
+      puts "-" * 7
+      player_results
+      puts "\nAny players whose names are missing have lost the game."
+    end
+
     def render_layout
       puts "\nLatest Results"
       puts "-" * 14
@@ -43,6 +47,8 @@ end of round. } # note: program deals out dealer's second card then
         render_layout_notes(player)
       end
     end
+
+    private
 
     def render_layout_notes(person)
       @person = person
@@ -66,27 +72,20 @@ end of round. } # note: program deals out dealer's second card then
       print "As score had been 17 or over, one ace was reset to 1 point. " if @person.ace_with_over_16 == true
     end
 
-    def render_results
-      puts "Results"
-      puts "-" * 7
-      player_results
-      puts "\nAny players whose names are missing have lost the game."
-    end
-
     def player_results
       @players.each do |player|
         case player.result
-        when "win"
+        when :win
           puts "#{player.name.ljust(12, padstr = " ")}: wins  #{player.bet.to_s.rjust(3, padstr = " ")} chips. Available chips = #{player.chips.to_s.rjust(3, padstr = " ")}."
-        when "win_blackjack"
+        when :win_blackjack
           puts "#{player.name.ljust(12, padstr = " ")}: wins  #{(player.bet * 1.5).to_i.to_s.rjust(3, padstr = " ")} chips. Available chips = #{player.chips.to_s.rjust(3, padstr = " ")}."
-        when "lose"
+        when :lose
           puts "#{player.name.ljust(12, padstr = " ")}: loses #{player.bet.to_s.rjust(3, padstr = " ")} chips. Available chips = #{player.chips.to_s.rjust(3, padstr = " ")}."
-        when "game lost"
+        when :game_lost
           puts "#{player.name.ljust(12, padstr = " ")}: loses #{player.bet.to_s.rjust(3, padstr = " ")} chips. No chips left. Game lost. Better luck next time!"
-        when "insufficient chips"
+        when :insufficient_chips
           puts "#{player.name.ljust(12, padstr = " ")}: loses #{player.bet.to_s.rjust(3, padstr = " ")} chips. Not enough chips left to continue. Better luck next time!"
-        when "stand-off"
+        when :stand_off
           puts "#{player.name.ljust(12, padstr = " ")}: has a stand-off (draw) and gets back bet of #{player.bet} chips. Available chips = #{player.chips.to_s.rjust(3, padstr = " ")}."
         end
       end

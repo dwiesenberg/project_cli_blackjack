@@ -5,23 +5,17 @@
 module Blackjack
   class Game
 
-    def initialize
-    end
-
     def play
       set_up
-      loop do
-        begin_round
-        continue_round
-        results
-        another_round?
-        reset_parameters
+      loop do           # rounds have two parts with different rules:
+        begin_round     # where each player is dealt two cards  
+        continue_round  # where each player in turns decides to hit, pass, etc. and dealer comes last
+        results         # analyze who wins, loses, draws
+        another_round   # exit unless choosing another round
       end
     end
 
     private
-
-    # begin set_up
 
     def set_up
       welcome
@@ -70,7 +64,7 @@ Some additional rules:
 
 # begin optional method for future programming
 
-    def sophisticated_option?
+    def sophisticated_option? # TODO optionally 
       puts %{
 Sophisticated blackjack has options to "split pairs" and "double 
 down." Do you want information on these (Y or N)? }
@@ -102,8 +96,7 @@ draws as normal afterwards.
       }
 
     end
-
-# end optional method for future programming      
+     
 
     def setup_deck
       @deck = Deck.new
@@ -148,16 +141,25 @@ draws as normal afterwards.
       amount
     end
 
-    # end set_up
-
-    # begin begin_round
- 
     def begin_round
+      initialize_variables
       place_bets
       @dealer.deal_card
       @board.players.each {|player| 2.times{player.deal_card}}
         # deal 2 cards to each player
-      @board.dealer_render_layout_note
+      @board.dealer_render_layout_note # dealer displays just one card
+    end
+
+    def initialize_variables  
+      @deck.create_card_deck
+      @dealer.points = 0   
+      @dealer.hand = []
+      @dealer.blackjack, @dealer.ace_with_over_16, @dealer.bust = false, false, false # needed here to stop these values being carried over to and displayed in a next round (they can't be changed to false until his turn in the round which comes AFTER all the players. Whereas each player's similar variables are made false BEFORE their turns in the round -- see code in class Player/Dealer method dealer_continues and players_continue.)
+      @board.players.each do |player| 
+        player.points = 0
+        player.hand = []
+        player.result = :not_set
+      end
     end
 
     def place_bets
@@ -165,18 +167,10 @@ draws as normal afterwards.
       @board.render_bets # after all bets placed
     end
 
-    # end begin_round
-
-    # begin continue_round
-
     def continue_round
       @board.players.each {|player| player.players_continue}
       @dealer.dealer_continues
     end
-
-    # end continue_round
-
-    # begin results
 
     def results
       @board.players.each do |player|
@@ -227,14 +221,10 @@ draws as normal afterwards.
     end
 
     def remove_game_losers
-      @board.players.delete_if {|player| player.result == "game lost" || player.result == "insufficient chips"}
+      @board.players.delete_if {|player| player.result == :game_lost || player.result == :insufficient_chips}
     end
 
-    # end results  
-
-    # begin another_round? / reset_parameters
-
-    def another_round?
+    def another_round
       if @board.players.empty?
         puts "No more players left."
       else
@@ -247,20 +237,6 @@ draws as normal afterwards.
       puts "\nThank you for playing!\n\n"
       exit
     end
-
-    def reset_parameters  
-      @deck.create_card_deck_again
-      @dealer.points = 0
-      @dealer.hand = []
-      @dealer.reset_dealer_parameters
-      @board.players.each do |player| 
-        player.points = 0
-        player.hand = []
-        player.result = ""
-      end
-    end
-
-    # end another_round? / reset_parameters
 
   end # class Game
 end # module Blackjack 
