@@ -20,7 +20,7 @@ module Blackjack
       @drawn_card = @cards.pop
       @drawn_card
     end
-
+ 
     private
 
     def manufacture_card_deck

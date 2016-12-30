@@ -18,8 +18,6 @@ module Blackjack
       @points = 0
     end
 
-
-
     def dealer_continues
       puts "\nDealer's turn - reveals his second card ..."
       deal_card
@@ -64,8 +62,6 @@ module Blackjack
         return "P"
       end
     end
-
-
 
   end # class Dealer
 end # module Blackjack 

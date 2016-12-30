@@ -5,8 +5,7 @@
 module Blackjack
   class Player < Participant
 
-    attr_reader :name, :chips, :bet, :blackjack, :bust
-    attr_reader :bust_with_ace 
+    attr_reader :name, :chips, :bet, :blackjack, :bust, :bust_with_ace, :ace_with_over_16 
     attr_accessor :hand, :points, :result 
 
     def initialize(deck, board, name, chips)
